@@ -6,8 +6,13 @@
     --btn-green: #0A3C3D;
     --btn-border: #021316;
     --btn-green-soft: #23978C;
+    --disabled-btn: #818181;
     --white: #F6F6F6;
+}
 
+@font-face {
+    font-family: Digital;
+    src: url('./DS-DIGI.TTF');
 }
 
 body {
@@ -58,12 +63,16 @@ body {
 }
 
 .calculadora__display-content {
+    font-family: Digital, sans-serif;
+    font-size: 3rem;
     color: var(--btn-green-soft);
     max-width: 100%;
     overflow-wrap: break-word;
 }
 
 .calculadora__display-result {
+    font-family: Digital, sans-serif;
+    font-size: 3rem;
     color: var(--white);
     max-width: 100%;
     overflow-wrap: break-word;
@@ -120,4 +129,8 @@ body {
 .btn__green-soft:hover {
     background-color: var(--white);
     color: var(--btn-dark-hover);
+}
+
+.btn__op:disabled {
+    background-color: var(--disabled-btn);
 }
