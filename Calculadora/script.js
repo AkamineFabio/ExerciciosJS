@@ -17,7 +17,7 @@ let result = ''; //variavel para guardar o resultado. Caso o usuário deseje faz
 
 class Calculadora {
     constructor(previousValueText, resultValueText) {
-        this.previousValueText = previousValueText;
+        this.previousValueText = previousValueText; // valor parte de cima
         this.resultValueText = resultValueText;
         this.currentValue = '';
     }
@@ -25,15 +25,17 @@ class Calculadora {
     //adiciona digitos para a tela da calculadora
     addDigit(digit) {
 
+        if (this.previousValueText.innerText.length >= 54) {
+            alert('Numero máximo atingido!');
+            return;
+        }
+
         if (digit === '.') {
             if (this.previousValueText.innerText.includes('.') && firstValue === '') {
                 return;
             }
             if (firstValue !== '' && operationValue) {
-                console.log('aaaaa');
                 secondValueTempo = this.previousValueText.innerText.slice(firstValueLength + 1);
-                console.log(`secondValueTempo: ${secondValueTempo}`);
-                console.log(`TYPE OF secondValueTempo: ${typeof (secondValueTempo)}`);
                 if (secondValueTempo.includes('.')) {
                     return;
                 }
@@ -43,7 +45,7 @@ class Calculadora {
             return;
         } else if (digit === '+' || digit === '-' || digit === '/' || digit === 'X' || digit === '%') { // caso o botao digitado seja uma operação
             operationValue = digit;
-            if (operationValue) {
+            if (operationValue) { //se existe um sinal de operação, desabilita os botões de operação
                 for (let btns of btnsOperation) {
                     btns.disabled = true;
                 }
@@ -53,12 +55,10 @@ class Calculadora {
             }
             if (isFirstOperation) { //caso seja a primeira vez que esteja fazendo uma operação
                 firstValueLength = this.previousValueText.innerText.length;
-                console.log(`RESULT LENGTH: ${firstValueLength}`);
                 firstValue = parseFloat(this.previousValueText.innerText);
 
             } else { //caso não seja a primeira operação e ele apertou um botão de operação, o valor do firstValue será o resultado da operação anterior
                 firstValueLength = this.resultValueText.innerText.length;
-                console.log(`RESULT LENGTH: ${firstValueLength}`);
                 firstValue = parseFloat(result);
                 this.previousValueText.innerText = firstValue;
             }
@@ -93,8 +93,6 @@ class Calculadora {
             }
             secondValue = this.previousValueText.innerText.slice(firstValueLength + 1);
             secondValue = parseFloat(secondValue);
-            console.log(`FIRST VALUE: ${firstValue}`);
-            console.log(`SECOND VALUE: ${secondValue}`);
             this.processOperation();
         } else {
             /* console.log(digit); */
@@ -144,7 +142,7 @@ class Calculadora {
         this.previousValueText.innerText += this.currentValue;
     }
 
-    resetOperation() {
+    resetOperation() { //faz os botões de operação voltarem a ficar habilitados
         for (let btns of btnsOperation) {
             btns.disabled = false;
         }
